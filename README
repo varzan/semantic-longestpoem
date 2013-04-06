@@ -1,0 +1,1 @@
+This is an attempt at selecting fragments of the longest poem in the world (see http://longestpoemintheworld.com) based on how much sense they make (i.e. the semantic similarity of their lyrics), using WordNet.
