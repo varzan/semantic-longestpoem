@@ -41,9 +41,10 @@ class SimilarityCalculator:
 
     def max_similarity(self, word, words, pos_tag):
         return max(self.word_similarity(word, other, pos_tag)
-                   for other in words) or 0
+                   for other in words) if words else 0
 
     def similarity(self, *sentences):
+        print "sentences: ", sentences
         pos_sets = {}
         for tag in self.pos_tags:
             pos_sets[tag] = [[word for word, pos_tag in sentence
@@ -57,16 +58,17 @@ class SimilarityCalculator:
         sim /= sum(idf.values())
         return sim
 
+    def similarity_bidirectional(self, sentence1, sentence2):
+        return (self.similarity(sentence1, sentence2) +
+                self.similarity(sentence2, sentence1)) / 2
+
 def test():
-    col = nltk.TextCollection(["Have you ever had a dream at night, and remembered it years later?",
-                              "Ok Earth Wind and Fire was cool but Carly Simon?..... Waiter!!"
-                              "Busy busy week. Finals due next week and tomorrow!",
-                              "Just did a trust fall onto the snow. It saved me. <3"])
+    col = nltk.TextCollection(nltk.corpus.brown)
     brown_ic = wordnet_ic.ic('ic-brown.dat')
-    sc = SimilarityCalculator(col, 'lin', brown_ic)
-    sentence1 = preprocess("Just did a trust fall onto the snow. It saved me. <3")
-    sentence2 = preprocess("Why have changed a lot. I really can not believe what I see ??")
-    print sc.similarity(sentence1, sentence2)
+    sc = SimilarityCalculator(col, 'wup', brown_ic)
+    sentence1 = preprocess("The jurors were taken into the courtroom in groups of 40 and asked to fill out a questionnaire.")
+    sentence2 = preprocess("About 120 potential jurors were being asked to complete a lengthy questionnaire.")
+    print sc.similarity_bidirectional(sentence1, sentence2)
 
 if __name__ == "__main__":
     test()
