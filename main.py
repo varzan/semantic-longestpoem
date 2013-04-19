@@ -6,10 +6,7 @@ from nltk.corpus import wordnet_ic
 from semsim import SimilarityCalculator, preprocess
 
 def pairwise(iterable):
-    "s -> (s0,s1), (s1,s2), (s2, s3), ..."
-    a, b = tee(iterable)
-    next(b, None)
-    return izip(a, b)
+    return izip(iterable[::2], iterable[1::2])
 
 def preprocess_lyrics(fname):
     pickled_fname = fname + ".processed"
