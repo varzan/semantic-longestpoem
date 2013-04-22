@@ -42,7 +42,6 @@ class SimilarityCalculator:
             return 0
         sim = max(self.sim_measure(sense1, sense2, self.ic) or 0
                    for sense1 in synsets1 for sense2 in synsets2)
-        print word1, word2, pos_tag, sim
         return sim
 
     def max_similarity(self, word, words, pos_tag):
