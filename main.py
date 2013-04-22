@@ -61,6 +61,7 @@ def main(fname):
         print_report(open(output_fname, 'w'), scores,
                      open(fname, 'r').read().split('\n'),
                      open(pickled_fname, 'w'))
+        now = datetime.datetime.now()
         print '[{}]: Finished calculation on {}'.format(str(now), similarity)
     
 
