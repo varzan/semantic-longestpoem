@@ -62,6 +62,8 @@ def main(fname):
             continue
         now = datetime.datetime.now()
         print '[{}] Starting calculation on {}'.format(str(now), similarity)
+        if similarity == 'bp':
+            adjust_bp()
         if os.path.exists(pickled_fname):
             scores = [score for couplet, score in
                       pickle.load(open(pickled_fname, 'r'))]
@@ -69,10 +71,6 @@ def main(fname):
             sc = SimilarityCalculator(collection, similarity, ic)
             for lyric1, lyric2 in pairwise(lyrics):
                 scores.append(sc.similarity_bidirectional(lyric1, lyric2))
-            f = open('bp_backup.txt.pickled', 'w')
-            results = list(zip(pairwise(lyrics), scores))
-            pickle.dump(results, f)
-            f.close()
         thresh_counts[similarity] = print_report(open(output_fname, 'w'),
                                                  scores,
                                                  open(fname, 'r').read().
@@ -105,7 +103,6 @@ def adjust_bp():
     pickle.dump(zip(couplets, scores), open(bp_adj_fname, 'w'))
     
 if __name__ == "__main__":
-    adjust_bp()
     main("longestpoem.txt")
     
 
