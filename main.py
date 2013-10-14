@@ -90,8 +90,6 @@ def main(fname):
     plt.xlabel("threshold")
     plt.ylabel("no. lyrics selected")
     plt.savefig(os.path.join("output", "thresholds.png"))
-    print thresh_counts['wup']
-    print thresh_counts['bp']
     
 def adjust_bp():
     bp_fname = os.path.join('output', 'bp.txt.pickled')
